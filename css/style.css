@@ -1,0 +1,26 @@
+/* Main CSS */
+table {
+    border-collapse:collapse;
+}
+table, th, td {
+    border: 3px solid black;
+}
+th, td {
+    height: 100px;
+    width: 100px;
+}
+td {
+    text-align: center;
+    font-family:"Calibri",monospace;
+}
+h1 {
+    text-align: center;
+    vertical-align: bottom;
+}
+h1 img {
+    vertical-align: bottom;
+}
+
+.clicked {
+    background: #02975c;
+}
