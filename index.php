@@ -1,3 +1,7 @@
+<?php
+include ("includes/config.php");
+?>
+
 <html>
     <head>
         <title>The Amp Hour Bingo</title>
@@ -14,43 +18,52 @@
 <body>
     <h1><img width="40px" height="40px" src='img/TheAmpHourLogo_40.png'>The Amp Hour Bingo<img  width="40px" height="40px" src='img/TheAmpHourLogo_40.png'></h1>
 <p>Click on the cell to toggle background colour.</p>
-    <table id='bingoTable'>
-        <tr>
-            <td>Dave Says "Bugger Off"</td>
-            <td>Non-Electronic Related Tangent</td>
-            <td>Dave Starts a Rant</td>
-            <td>Discussion of Engineers Pursuing Finance Careers</td>
-            <td>Mighty Ohm Makes a Guest Apperance</td>
-        </tr>
-        <tr>
-            <td>3D Printing Segment</td>
-            <td>Open Source Discussion</td>
-            <td>Host Mentions Their Home Lab Setup</td>
-            <td>Guest Apperance</td>
-            <td>Chris' Baby Face Brought Up</td>
-        </tr>
 
-        <tr>
-            <td>Reference to Dilbert World</td>
-            <td>Technicial Difficulties</td>
-            <td><img width="100px" height="100px" src='img/TheAmpHourLogo_100.png'></td>
-            <td>Dave Shows His Age</td>
-            <td>"I'll Send You a Dollar to Buy a Clue"</td>
+<?php
+$width = $config['bingoGridsize'];
+$height = $config['bingoGridsize'];
+if ($config['bingoGridsize'] % 2) {
+    $numberOfCells = ($width * $height)-1;
+} else {
+    $numberOfCells = ($width * $height);
+}
 
-        </tr>
-        <tr>
-            <td>Discuss Green Technology </td>
-            <td>A "Listener" Calls In</td>
-            <td>Women in Engineering Discussion</td>
-            <td>Home Made IC Argument</td>
-            <td>Dave Insults the USAv
-        </tr>
-        <tr>
-            <td>Chris Starts a Rant</td>
-            <td>Of Course the CEO of Company X is Listening</td>
-            <td>Hackerspaces Discussed</td>
-            <td>Whole Show Without 555 or Arduino Mentioned</td>
-            <td>Jeri Ellsworth Makes a Guest Apperance</td>
-        </tr>
-    </table>
+$centerCell = abs($numberOfCells/2);
+// Get the data!
+$sql = "SELECT itm_text FROM items_itm WHERE itm_isEnabled = 1 ORDER by rand() LIMIT $numberOfCells ";
+$result = mysql_query($sql) or die("<b>A fatal MySQL error occured</b>.\n<br />Query: " . $sql . "<br />\nError: (" . mysql_errno() . ") " . mysql_error());
+$numRows = mysql_num_rows($result);
+if ($numRows < $numberOfCells) {
+    echo 'Not enough items!<BR>';
+    echo "Found $numRows , need $numberOfCells!";
+    die;
+}
+
+echo "<table id='bingoTable'>\n<tr>";
+$counter = 0;
+while ($row = mysql_fetch_assoc($result)) {
+    if (($counter % $config['bingoGridsize']) == 0) {
+        echo "</tr>\n<tr>";
+    }
+    // Center image?
+    if ((($config['bingoGridsize'] % 2)==1) && $counter == $centerCell) {
+        echo "<td><img width='100px' height='100px' src='img/TheAmpHourLogo_100.png'></td>\n";
+        $counter++;
+    }
+    echo "<td>".$row['itm_text']."</td>\n";
+    $counter++;
+
+}
+mysql_free_result($result);
+
+echo "</table>";
+
+?>
+  </table>
+  <div id="footer">
+    The Amp Hour logo is &copy; by <a href="http://www.TheAmpHour.com" target="_new">TheAmpHour.com</a><BR>
+    Idea by <a  target="_new" href="http://fakeeequips.wordpress.com/">FakeEEQuips</a> - Code by <a  target="_new" href="http://twitter.com/RoelAdriaans">Roel Adriaans</a> - Code available on <a target="_new" href="https://github.com/RoelAdriaans/The-Amp-Hour-Bingo">Github</a>
+    Suggestions, questions or new quotes? <a href="mailto:roel@adriaans.org">roel@adriaans.org</a>
+  </div>
+
 </body>

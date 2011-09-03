@@ -1,0 +1,34 @@
+Documentation
+-------------
+
+The Amp Hour Bingo, based on the Amp Hour. (http://www.theamphour.com/)
+
+- Idea by FakeEEQuips (http://fakeeequips.wordpress.com/ and )
+- Code by Roel Adriaans (http://twitter.com/RoelAdriaans)
+
+
+Installation
+------------
+
+Create database user.
+
+Create database:
+
+
+CREATE TABLE IF NOT EXISTS `items_itm` (
+  `itm_id` int(11) NOT NULL AUTO_INCREMENT,
+  `itm_text` text NOT NULL,
+  `itm_isEnabled` tinyint(1) NOT NULL,
+  PRIMARY KEY (`itm_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `option_opt` (
+  `opt_id` int(11) NOT NULL AUTO_INCREMENT,
+  `opt_name` varchar(64) NOT NULL,
+  `opt_value` longtext NOT NULL,
+  `opt_autoload` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`opt_id`),
+  UNIQUE KEY `opt_name` (`opt_name`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+INSERT INTO `option_opt` (`opt_id`, `opt_name`, `opt_value`, `opt_autoload`) VALUES (1, 'bingoGridsize', '5', 1);
