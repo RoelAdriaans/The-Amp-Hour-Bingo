@@ -48,7 +48,7 @@ while ($row = mysql_fetch_assoc($result)) {
     }
     // Center image?
     if ((($config['bingoGridsize'] % 2)==1) && $counter == $centerCell) {
-        echo "<td><img width='100px' height='100px' src='img/TheAmpHourLogo_100.png' alt='The Amp Hour'>/td>\n";
+        echo "<td><img width='100px' height='100px' src='img/TheAmpHourLogo_100.png' alt='The Amp Hour'></td>\n";
         $counter++;
     }
     echo "<td>".$row['itm_text']."</td>\n";
