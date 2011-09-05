@@ -1,22 +1,23 @@
 <?php
 include ("includes/config.php");
 ?>
-
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-    <head>
-        <title>The Amp Hour Bingo</title>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
- <script type="text/javascript" src="js/jquery.js"></script>
-  <script type="text/javascript">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>The Amp Hour Bingo</title>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript">
     $(document).ready(function() {
         $("#bingoTable td").click(function () {
             $(this).toggleClass("clicked");
         });
     });
     </script>
-    </head>
+</head>
 <body>
-    <h1><img width="40px" height="40px" src='img/TheAmpHourLogo_40.png'>The Amp Hour Bingo<img  width="40px" height="40px" src='img/TheAmpHourLogo_40.png'></h1>
+<h1><img width="40px" height="40px" src='img/TheAmpHourLogo_40.png' alt="The Amp Hour">The Amp Hour Bingo<img  width="40px" height="40px" src='img/TheAmpHourLogo_40.png' alt='The Amp Hour'></h1>
 <p>Click on the cell to toggle background colour.</p>
 
 <?php
@@ -42,12 +43,12 @@ if ($numRows < $numberOfCells) {
 echo "<table id='bingoTable'>\n<tr>";
 $counter = 0;
 while ($row = mysql_fetch_assoc($result)) {
-    if (($counter % $config['bingoGridsize']) == 0) {
+    if ($counter != 0 && ($counter % $config['bingoGridsize']) == 0) {
         echo "</tr>\n<tr>";
     }
     // Center image?
     if ((($config['bingoGridsize'] % 2)==1) && $counter == $centerCell) {
-        echo "<td><img width='100px' height='100px' src='img/TheAmpHourLogo_100.png'></td>\n";
+        echo "<td><img width='100px' height='100px' src='img/TheAmpHourLogo_100.png' alt='The Amp Hour'>/td>\n";
         $counter++;
     }
     echo "<td>".$row['itm_text']."</td>\n";
@@ -56,10 +57,9 @@ while ($row = mysql_fetch_assoc($result)) {
 }
 mysql_free_result($result);
 
-echo "</table>";
 
 ?>
-  </table>
+</tr> </table>
   <div id="footer">
     The Amp Hour logo is &copy; by <a href="http://www.TheAmpHour.com" target="_new">TheAmpHour.com</a><BR>
     Idea by <a  target="_new" href="http://fakeeequips.wordpress.com/">FakeEEQuips</a> - Code by <a  target="_new" href="http://twitter.com/RoelAdriaans">Roel Adriaans</a> - Code available on <a target="_new" href="https://github.com/RoelAdriaans/The-Amp-Hour-Bingo">Github</a>
